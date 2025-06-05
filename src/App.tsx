@@ -180,7 +180,7 @@ export const App = () => {
                   weight="bold"
                   style={{ marginBottom: 0 }}
                 >
-                  Гибкая настройка операций
+                  Настройка истории
                 </Typography.Text>
                 <Typography.Text
                   tag="p"
@@ -188,7 +188,7 @@ export const App = () => {
                   color="secondary"
                   style={{ marginBottom: 0 }}
                 >
-                  Контролируйте какие траты видят участники счёта
+                  Выбирайте, какие траты видны участникам
                 </Typography.Text>
               </div>
             </div>

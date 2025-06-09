@@ -10,18 +10,19 @@ import image from "./assets/image.png";
 import eyes from "./assets/eyes.png";
 import { LS, LSKeys } from "./ls";
 import { appSt } from "./style.css";
-import { ThxLayout } from "./thx/ThxLayout";
 import { Gap } from "@alfalab/core-components/gap";
 import React, { useState } from "react";
 import { Tab, Tabs } from "@alfalab/core-components/tabs";
 import { SelectedId } from "@alfalab/core-components/tabs/typings";
+import { ThxLayout } from "./thx/ThxLayout";
+import { sendDataToGA } from "./utils/events";
 
 export const App = () => {
   const [loading, setLoading] = useState(false);
   const [thx, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
   const [step, setStep] = useState(1);
-  const [refill, setRefill] = useState<SelectedId>("tab-1");
-  const [spending, setSpending] = useState<SelectedId>("tab-1");
+  const [refill, setRefill] = useState<SelectedId>("Всем");
+  const [spending, setSpending] = useState<SelectedId>("Всем");
 
   const handleRefill = (
     _: React.MouseEvent,
@@ -39,10 +40,16 @@ export const App = () => {
 
   const submit = () => {
     setLoading(true);
-    Promise.resolve().then(() => {
+    sendDataToGA({ option: `${refill}/${spending}` }).then(() => {
       setLoading(false);
       setThx(true);
       LS.setItem(LSKeys.ShowThx, true);
+    });
+  };
+
+  const clickContinue = () => {
+    window.gtag("event", "5388_dalee_click", {
+      variant_name: "ghk_5388_3",
     });
   };
 
@@ -230,8 +237,8 @@ export const App = () => {
           <Gap size={8} />
 
           <Tabs view="secondary" selectedId={refill} onChange={handleRefill}>
-            <Tab key="1" id="tab-1" title="Всем" />
-            <Tab key="2" id="tab-2" title="Только мне" />
+            <Tab key="1" id="Всем" title="Всем" />
+            <Tab key="2" id="Только мне" title="Только мне" />
           </Tabs>
 
           <Gap size={24} />
@@ -252,8 +259,8 @@ export const App = () => {
             selectedId={spending}
             onChange={handleSpending}
           >
-            <Tab key="1" id="tab-1" title="Всем" />
-            <Tab key="2" id="tab-2" title="Только мне" />
+            <Tab key="1" id="Всем" title="Всем" />
+            <Tab key="2" id="Только мне" title="Только мне" />
           </Tabs>
 
           <Gap size={32} />
@@ -287,7 +294,10 @@ export const App = () => {
         <div className={appSt.bottomBtnThx}>
           <ButtonMobile
             loading={loading}
-            onClick={() => setStep(2)}
+            onClick={() => {
+              clickContinue();
+              setStep(2);
+            }}
             block
             view="primary"
           >

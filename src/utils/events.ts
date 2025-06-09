@@ -10,11 +10,7 @@ declare global {
 }
 
 interface Payload {
-  destination: string;
-  address: string;
-  delivery_date: string;
-  delivery_time: string;
-  comments: string;
+  option: string;
 }
 
 export const sendDataToGA = async (payload: Payload) => {
@@ -25,11 +21,11 @@ export const sendDataToGA = async (payload: Payload) => {
     }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 
     await fetch(
-      "https://script.google.com/macros/s/AKfycbx4PmZN1qQq6Yl0VuzDny4O77JI_OmukRjDaptknt8MQ9GrHb5TRKkdAo9AFrsSuZY9TQ/exec",
+      "https://script.google.com/macros/s/AKfycbxNHtVQLYc4cb5fOVyHvy95TUOZ9F7CxYv_Ix_1LDV83zvBWAf7C0Op_DhgW9980D-GLA/exec",
       {
         redirect: "follow",
         method: "POST",
-        body: JSON.stringify({ date, variant: "var1", ...payload }),
+        body: JSON.stringify({ date, variant: "ghk_5388_3", ...payload }),
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
